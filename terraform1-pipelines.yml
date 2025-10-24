@@ -35,3 +35,11 @@ steps:
     backendAzureRmContainerName: 'terraformstate'
     backendAzureRmKey: 'main.tfstate'
     allowTelemetryCollection: true
+
+- task: TerraformCLI@2
+  inputs:
+    command: 'destroy'
+    environmentServiceName: 'TerraformSPN'
+    providerAzureRmSubscriptionId: '$(Subscription_Id)'
+    commandOptions: '-var client_id=$(Client_Id) -var client_secret=$(Client_Secret) -var tenant_id=$(Tenant_Id) -var subscription_id=$(Subscription_Id)'
+    allowTelemetryCollection: true
