@@ -16,4 +16,18 @@ steps:
 - script: echo $(Client_Id)
   displayName: 'Run a one-line script'
 
-
+- task: TerraformCLI@2
+  inputs:
+    command: 'init'
+    commandOptions: '-var client_id=$(Client_Id) -var client_secret=$(Client_Secret) -var tenant_id=$(Tenant_Id) -var subscription_id=$(Subscription_Id)'
+    backendType: 'azurerm'
+    backendServiceArm: 'TerraformSPN'
+    backendAzureRmTenantId: '$(Tenant_Id)'
+    backendAzureRmSubscriptionId: '$(Subscription_Id)'
+    ensureBackend: true
+    backendAzureRmResourceGroupName: 'ptd-pulse'
+    backendAzureRmResourceGroupLocation: 'Central India'
+    backendAzureRmStorageAccountName: 'prdsaterraform'
+    backendAzureRmContainerName: 'terraformstate'
+    backendAzureRmKey: 'main.tfstate'
+    allowTelemetryCollection: true
